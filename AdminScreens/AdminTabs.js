@@ -45,7 +45,7 @@ function SignOut({ navigation }) {
                     fontSize: 12
                 },
                 tabBarIcon: ({ color, size }) => (
-                    <MaterialCommunityIcons name="feather" color={'#ffd700'} size={30} />
+                    <MaterialCommunityIcons name="home" color={'#ffd700'} size={30} />
                 ),
 
             }}

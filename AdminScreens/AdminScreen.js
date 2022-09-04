@@ -11,8 +11,10 @@ import {
   Alert
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { set } from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { firebase } from "../config";
+import { doc } from "firebase/firestore";
 
 const AdminScreen = ({ route, navigation }) => {
 
@@ -20,13 +22,20 @@ const AdminScreen = ({ route, navigation }) => {
   const dataRef = firebase.firestore().collection("products");
   const [show, setshow] = useState(false);
   const [showBox, setShowBox] = useState(true);
-
+ 
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [imgURL, setImageURL] = useState("");
   const [category_name, setCategory_name] = useState('');
+
+  //const [productName, setProductName] = useState(route.params.item.name);
+  //const [desc, setDesc] = useState(route.params.item.desc);
+  //const [price, setPrice] = useState(route.params.item.price);
+  //const [category_id, setCategory_id] = useState(route.params.item.category_id);
+  //const [category_name, setCategory_name] = useState(route.params.item.category_name);
+  //const [callImage, setCallImage] = useState(route.params.item.imgURL);
 
   useEffect(() => {
     read();
@@ -61,20 +70,6 @@ const AdminScreen = ({ route, navigation }) => {
         setData(data);
       });
   };
-
-  //// delete data
-  //const destroy = (data) => {
-  //  dataRef
-  //    .doc(data.id)
-  //    .delete()
-  //    .then(() => {
-  //      alert("Deleted Successfully!");
-  //      console.log(" Data Deleted");
-  //    })
-  //    .catch((error) => {
-  //      alert("error");
-  //    });
-  //};
 
   // delete data
   const showConfirmDialog = (data) => {
@@ -177,13 +172,14 @@ const AdminScreen = ({ route, navigation }) => {
                       color="gold"
                     />
                   </TouchableOpacity>
-
                   <Text style={styles.padd}>
                     {item.category_name}
                   </Text>
+                  <TouchableOpacity onPress={() => navigation.navigate("TrendProduct", {item})} style={{ left: 10, }}>
+                    <Text style={{color: "#000", padding: 5,backgroundColor: "gold", fontWeight: '700', borderRadius: 8}}> Set Trending </Text>
+                  </TouchableOpacity>
 
-
-                  <TouchableOpacity onPress={() => showConfirmDialog(item)} style={{ left: 60, }}>
+                  <TouchableOpacity onPress={() => showConfirmDialog(item)} style={{ left: 35, }}>
                     <Ionicons name="trash" color={"#ffd700"} size={30} />
                   </TouchableOpacity>
                 </View>
@@ -250,7 +246,7 @@ const styles = StyleSheet.create({
   },
   padd: {
     width: 100,
-    marginLeft: '30%',
+    marginLeft: '10%',
     color: 'gold',
     fontWeight: "bold",
     fontSize: 18,
@@ -284,3 +280,40 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
   }
 });
+
+    //const dataTrend = {
+    //  //imgURL: setImageURL,
+    //  name: productName,
+    //  desc: desc,
+    //  price: parseFloat(price),
+    //  category_id: selectedItem.id,
+    //  category_name: selectedItem.name,
+    //  createdAt: timestamp,
+    //};
+    //dataRef
+    //  .add(dataTrend)
+    //  .then(() => {
+    //    //imgURL(""),
+    //    setProductName("");
+    //    setDesc("");
+    //    setPrice("");
+    //    setCategory("");
+    //  })
+    //  .then(() => {
+    //        alert("Insert Trending Item Successfully!");
+    //        console.log(" Data Inserted into Trending List");
+    //      })
+    //      .catch((error) => {
+    //        alert("error");
+    //      });
+
+  //  const dataTrend = dataRef.doc(data)
+  //  const cartOrder = {
+  //    cartList,
+  //    "total": total,
+  //    "username": user?.username,
+  //    "phone": user?.phone,
+  //    "address": user?.address,  
+  //    "note" : note,
+  //    'createdAt':timestamp,
+  //};

@@ -1,16 +1,15 @@
-import { SafeAreaView, ActivityIndicator, StyleSheet, Text, View, TextInput, TouchableOpacity, Button, Image, ImageBackground } from 'react-native';
+import { SafeAreaView,ActivityIndicator, StyleSheet, Text, View, TextInput, TouchableOpacity, Button, Image, ImageBackground } from 'react-native';
 import { firebase } from '../config'
 import React, { useState, useEffect } from 'react';
 import * as Animatable from 'react-native-animatable';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { set } from 'react-native-reanimated';
+
 export default function Login({ navigation }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const [show, setshow] = useState(false);
 
     function register() {
         navigation.navigate('Register')
@@ -20,14 +19,10 @@ export default function Login({ navigation }) {
     }
 
     const onLoginPress = () => {
-        setshow(true)
-        setTimeout(() => {
-            setshow(false)
-        }, 4000)
+
         var emailValid = false;
         if (email.length == 0) {
             setEmailError("Email is required");
-            setshow(false)
         }
         else if (email.length < 6) {
             setEmailError("Email should be minimum 6 characters");
@@ -47,7 +42,6 @@ export default function Login({ navigation }) {
         var passwordValid = false;
         if (password.length == 0) {
             setPasswordError("Password is Required!");
-            setshow(false)
         }
         else {
             firebase
@@ -79,17 +73,16 @@ export default function Login({ navigation }) {
                             }
                         })
 
-                    //.catch(error => {
-                    //    console.log(error)
-                    //        setPasswordError("Useremail or password is wrong");
-                    //    //   console.log(error)
-                    //})
+                        //.catch(error => {
+                        //    console.log(error)
+                        //        setPasswordError("Useremail or password is wrong");
+                        //    //   console.log(error)
+                        //})
                 })
                 .catch(error => {
                     console.log(error)
                     setPasswordError("Email or Password is wrong!Try Again...");
-                    setshow(false)
-
+                 
                 })
 
             setPasswordError("")
@@ -98,7 +91,7 @@ export default function Login({ navigation }) {
 
     }
 
-
+    
     return (
 
         <View style={styles.container}>
@@ -107,83 +100,75 @@ export default function Login({ navigation }) {
                 source={require('../assets/bg.jpg')}
                 style={{ width: '100%', height: "100%" }}
             >
-                <SafeAreaView style={{ flex: 1, padding: 5, marginTop: -2 }}>
+                 <SafeAreaView style={{ flex: 1, padding: 5,marginTop:-2 }}>
+                    <Animatable.View
+                        animation="fadeInUp"
+                        duration={3000}
+                    >
+                <KeyboardAwareScrollView>
+                    <View style={{ flex: 1, marginLeft: 200, }}>
 
-                    <KeyboardAwareScrollView>
-                        {/*<Animatable.View
-                            animation="pulse"
-                        >*/}
-                            <View style={{ flex: 1, marginLeft: 200, }}>
+                        <Text style={{ fontSize: 40, paddingLeft: 30, marginTop: 90, fontWeight: "900", color: "#000" }}>WTTH</Text>
+                        <Image
+                            style={{
+                                height: 100,
+                                width: 100,
+                                marginLeft: 45,
+                                marginTop: 25,
+                                borderRadius: 50
+                            }}
+                            source={require('../assets/logo.png')}
+                        />
+                    </View>
 
-                                <Text style={{ fontSize: 40, paddingLeft: 30, marginTop: 90, fontWeight: "900", color: "#000" }}>WTTH</Text>
-                                <Image
-                                    style={{
-                                        height: 100,
-                                        width: 100,
-                                        marginLeft: 45,
-                                        marginTop: 25,
-                                        borderRadius: 50
-                                    }}
-                                    source={require('../assets/logo.png')}
-                                />
-                            </View>
-                        {/*</Animatable.View>*/}
+                    <View style={styles.con}>
 
-                        <View style={styles.con}>
-                            <Animatable.View
-                                animation='fadeInUp'
-                                duration={2000}
-                            >
-                                <Text style={{
-                                    fontSize: 28, fontWeight: "bold", color: "#f7d081", marginBottom: 40, marginLeft: 10,
-                                }}>LOG IN</Text>
+                        <Text style={{
+                            fontSize: 28, fontWeight: "bold", color: "#f7d081", marginBottom: 40, marginLeft: 10,
+                        }}>LOG IN</Text>
 
-                                <TextInput
-                                    value={email}
-                                    onChangeText={(text) => setEmail(text)}
-                                    placeholder='Email Address'
-                                    style={styles.textBoxes}
-                                    keyboardType={'email-address'}
-                                    placeholderTextColor="#c4c4c2"
-                                />
-                                {emailError.length > 0 &&
-                                    <Text style={{ color: "red" }}>{emailError}</Text>
-                                }
-                                <TextInput
-                                    value={password}
-                                    onChangeText={(text) => setPassword(text)}
-                                    placeholder='Password'
-                                    style={styles.textBoxes}
-                                    secureTextEntry
-                                    placeholderTextColor="#c4c4c2" />
+                        <TextInput
+                            value={email}
+                            onChangeText={(text) => setEmail(text)}
+                            placeholder='Email Address'
+                            style={styles.textBoxes}
+                            keyboardType={'email-address'}
+                            placeholderTextColor="#c4c4c2"
+                        />
+                        {emailError.length > 0 &&
+                            <Text style={{ color: "red" }}>{emailError}</Text>
+                        }
+                        <TextInput
+                            value={password}
+                            onChangeText={(text) => setPassword(text)}
+                            placeholder='Password'
+                            style={styles.textBoxes}
+                            secureTextEntry
+                            placeholderTextColor="#c4c4c2" />
 
-                                {passwordError.length > 0 &&
+                        {passwordError.length > 0 &&
 
-                                    <Text style={{ color: "red" }}>{passwordError}</Text>
-                                }
+                            <Text style={{ color: "red" }}>{passwordError}</Text>
+                        }
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => onLoginPress()}>
+                            <Text style={styles.buttonTitle}>Log in</Text>
+                        </TouchableOpacity>
 
-                                <ActivityIndicator size="large" color="gold" animating={show} style={styles.activityIndicator}></ActivityIndicator>
-                                <TouchableOpacity
-                                    style={styles.button}
-                                    onPress={() => onLoginPress()}
-                                >
-                                    <Text style={styles.buttonTitle}>Log in</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity style={{ marginTop: 30, marginLeft: 10, }} onPress={forgotPassword}>
-                                    <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>Forgot Password?</Text>
-                                </TouchableOpacity>
-                                <View style={{ flex: 1, marginTop: 20, marginLeft: 10, }}>
-                                    <Text style={{ fontSize: 18, color: "#fff" }}>Don't have an account? <Text style={{ color: "#f7d081", fontSize: 20, fontWeight: "bold" }}
-                                        onPress={register}>Sign up</Text></Text>
-                                </View>
-                            </Animatable.View>
+                        <TouchableOpacity style={{ marginTop: 30, marginLeft: 10, }} onPress={forgotPassword}>
+                            <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>Forgot Password?</Text>
+                        </TouchableOpacity>
+                        <View style={{ flex: 1, marginTop: 20, marginLeft: 10, }}>
+                            <Text style={{ fontSize: 18, color: "#fff" }}>Don't have an account? <Text style={{ color: "#f7d081", fontSize: 20, fontWeight: "bold" }}
+                                onPress={register}>Sign up</Text></Text>
                         </View>
 
-                    </KeyboardAwareScrollView>
-
+                    </View>
+                        </KeyboardAwareScrollView>
+                        </Animatable.View>
                 </SafeAreaView>
-
+            
             </ImageBackground>
 
         </View>
@@ -194,7 +179,6 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        position: 'relative'
 
     },
     con: {
@@ -237,10 +221,4 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
 
     },
-    activityIndicator: {
-        paddingTop: "95%",
-        paddingLeft: "65%",
-        position: 'absolute',
-        //paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-    }
 });

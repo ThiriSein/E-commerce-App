@@ -47,7 +47,6 @@ const CategoryList = ({navigation}) => {
                 )}
             
             />
-
             <Button
                 title='Back'
                 onPress={() => navigation.navigate('CreateCategory')}

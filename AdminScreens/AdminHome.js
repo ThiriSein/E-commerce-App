@@ -4,6 +4,7 @@ import CreateProduct from './CreateProduct';
 import UpdateProduct from './UpdateProduct';
 import CreateCategory from './CreateCategory';
 import CategoryList from './CategoryList';
+import TrendProduct from './TrendProduct';
 import Confirm from './confirm';
 import { Button, View } from 'react-native';
 const Stack = createStackNavigator();
@@ -30,6 +31,15 @@ export default function AdminHome({ navigation }) {
           }}
         />
         <Stack.Screen name='UpdateProduct' component={UpdateProduct}
+          options={{
+            headerShown: true, headerTitleAlign: 'center',headerStyle: { backgroundColor: '#000' },
+            headerTitleStyle: { color: '#fff', }, headerLeft: () => ( <Button
+                onPress={() => navigation.navigate('Admin')} 
+                title="<<<"
+                color="#000"
+              />),
+          }} />
+        <Stack.Screen name='TrendProduct' component={TrendProduct}
           options={{
             headerShown: true, headerTitleAlign: 'center',headerStyle: { backgroundColor: '#000' },
             headerTitleStyle: { color: '#fff', }, headerLeft: () => ( <Button

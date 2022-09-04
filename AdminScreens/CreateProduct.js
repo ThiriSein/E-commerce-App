@@ -16,11 +16,10 @@ const CreateProduct = ({ navigation }) => {
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
 
-
+  //category
   const [data, setData] = useState([]);
   const catRef = firebase.firestore().collection('categories');
   const [name, setName] = useState('')
-
   const [selectedItem, setSelectedItem] = useState();
 
   const [show, setshow] = useState(false);
@@ -29,8 +28,8 @@ const CreateProduct = ({ navigation }) => {
   const [uploading, setUploading] = useState(false);
   const [imgURL, setImageURL] = useState("");
 
+  //image picker
   const pickImage = async () => {
-    //No permission request is needed to upload photo
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -143,7 +142,6 @@ const CreateProduct = ({ navigation }) => {
 
 
   return (
-
     <View style={styles.container}>
       
         <View style={styles.imageContainer}>
@@ -192,7 +190,6 @@ const CreateProduct = ({ navigation }) => {
               setSelectedItem(selectedItem);
               console.log(selectedItem, index)
             }}
-
             buttonTextAfterSelection={(selectedItem, index) => {
               return selectedItem.name
             }}
@@ -202,13 +199,14 @@ const CreateProduct = ({ navigation }) => {
             }}
           />
         </View>
+      
       <View style={{ justifyContent: "center", alignItems: 'center' }}>
       <ActivityIndicator size="large" color="#fff700"  animating={show} style={{marginTop: -15,paddingBottom:10,}}></ActivityIndicator>
           <TouchableOpacity style={styles.btn} onPress={() => add()}>
-            <Text>Create </Text>
+            <Text> Create </Text>
           </TouchableOpacity>
           </View>
-    </View>
+      </View>
   )
 }
 
@@ -277,11 +275,13 @@ const styles = StyleSheet.create({
   selectButton: {
     backgroundColor: "gold",
     marginTop: 10,
-    marginLeft: "35%",
+    marginLeft: "30%",
     padding: 10,
     borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
   ImgBot: {
-    width: "30%",
+    width: "38%",
   },
 })

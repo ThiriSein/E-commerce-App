@@ -18,10 +18,13 @@ import { useIsFocused } from '@react-navigation/native';
 import { firebase } from "../config";
 import { SearchBar } from "react-native-elements";
 import * as Animatable from "react-native-animatable";
+import UserTrendList from "./UserTrendList";
 
 const ImageHome = [
+  "https://assets.vogue.com/photos/61536b6d48a587a316a3131b/master/w_1920,c_limit/00009-Christian-Dior-Spring-22-RTW-Paris-credit-Alessandro-Lucioni-Gorunway.jpg",
+  "https://pbs.twimg.com/media/FbfwzaFWYAIG8l3?format=jpg&name=large",
   "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80",
-  "https://www.wowkorea.live/img/album/66/331537/417744_l.jpg",
+  "https://pbs.twimg.com/media/FbnfsWbacAA3aI2?format=jpg&name=small",
   "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
   "https://i.pinimg.com/564x/8a/1c/fc/8a1cfc2100eb7b3558284a1340096f45.jpg",
   "https://images.unsplash.com/photo-1520975708797-fd2543e902bf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
@@ -57,47 +60,6 @@ function BackDrop({ scrollX }) {
         setUser(user.data());
       });
   }, [isFocused]);
-
-  // Search item
-  useEffect(() => {
-    setFilterProduct(
-      data.filter(
-        (res) =>
-          res.name.toLowerCase().includes(search.toLowerCase()) ||
-          res.desc.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [search, data]);
-
-  // read data
-  const read = () => {
-    dataRef.orderBy("createdAt", "desc").onSnapshot((querySnapshot) => {
-      const data = [];
-      querySnapshot.forEach((doc) => {
-        const { imgURL } = doc.data();
-        const { name } = doc.data();
-        const { desc } = doc.data();
-        const { price } = doc.data();
-        //  const { qty } = doc.data();
-        const { category_name } = doc.data();
-
-        data.push({
-          id: doc.id,
-          imgURL,
-          name,
-          desc,
-          price,
-          //qty,
-          category_name,
-        });
-      });
-      setData(data);
-    });
-  };
-
-  useEffect(() => {
-    read();
-  }, []);
 
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress",()=>{
@@ -162,26 +124,7 @@ function BackDrop({ scrollX }) {
           <Text style={styles.label1}>Welcome {user?.username}!</Text>
           </Animatable.View>
         <Text style={styles.label2}> Find your style with WTTH</Text>
-        {/*<SearchBar
-        placeholder="Search"
-        onChangeText={(search) => setSearch(search)}
-        value={search}
-      />
-
-      {search.length ? (
-        <Text style={{position: "absolute"}}>
-          {filterProduct.map((item) => (
-            <View style={{position: "absolute"}}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ProductDetail", { item })}
-              >
-                <Text style={{ color: "#fff", fontSize: 20, }}>{item.name}</Text>
-                <Text style={{ color: "#fff", fontSize: 10 }}>{item.desc}</Text>
-              </TouchableOpacity>
-            </View>
-          ))}
-        </Text>
-                ) : null}*/}
+       
       </Animatable.View>
     </View>
   );
@@ -335,42 +278,18 @@ export default function DrawerHome({ navigation }) {
           </TouchableOpacity>
         </Animatable.View>
 
-        <Animatable.View
+      <ScrollView nestedScrollEnabled={true} style={{ width: "100%" }} >
+    <Animatable.View
           animation="fadeInUp"
           duration={3000}
-          style={styles.row}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("Woman")}>
-            <Image
-              source={require("../assets/trend2.png")}
-              style={styles.Trend}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Men")}>
-            <Image
-              source={require("../assets/trend3.jpg")}
-              style={styles.Trend}
-            />
-          </TouchableOpacity>
-        </Animatable.View>
-        <Animatable.View
-          animation="fadeInUp"
-          duration={2000}
-          style={styles.row}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("Shoes")}>
-            <Image
-              source={require("../assets/trend1.jpg")}
-              style={styles.Trend}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Accessory")}>
-            <Image
-              source={require("../assets/prada.jpg")}
-              style={styles.Trend}
-            />
-          </TouchableOpacity>
-        </Animatable.View>
+          style={styles.row}>
+    <ScrollView horizontal={true} style={{ width: "100%" }}>
+    <UserTrendList/>
+    </ScrollView>
+    </Animatable.View>
+    </ScrollView>
+     
+       
       </ScrollView>
     </SafeAreaView>
   );
@@ -454,3 +373,40 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
+
+ {/*<Animatable.View
+          animation="fadeInUp"
+          duration={3000}
+          style={styles.row}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("Woman")}>
+            <Image
+              source={require("../assets/trend2.png")}
+              style={styles.Trend}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Men")}>
+            <Image
+              source={require("../assets/trend3.jpg")}
+              style={styles.Trend}
+            />
+          </TouchableOpacity>
+        </Animatable.View>*/}
+        {/*<Animatable.View
+          animation="fadeInUp"
+          duration={2000}
+          style={styles.row}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("Shoes")}>
+            <Image
+              source={require("../assets/trend1.jpg")}
+              style={styles.Trend}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Accessory")}>
+            <Image
+              source={require("../assets/prada.jpg")}
+              style={styles.Trend}
+            />
+          </TouchableOpacity>
+        </Animatable.View>*/}

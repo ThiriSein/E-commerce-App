@@ -183,7 +183,7 @@ const UpdateProduct = ({ route, navigation }) => {
          
        }
     }
-      };
+  };
 
   return (
     <View style={styles.container}>
@@ -247,9 +247,10 @@ const UpdateProduct = ({ route, navigation }) => {
               }}
         />
         <Text style={{ color: 'red', fontSize: 20 ,fontWeight: '300' }}>{error.selectedItem}</Text>
-          </View>
+      </View>
           <View style={{ justifyContent: "center", alignItems: "center", }}>
-          <ActivityIndicator size="large" color="#fff700"  animating={show} style={{marginTop: -15,paddingBottom:10,}}></ActivityIndicator>
+        <ActivityIndicator size="large" color="#fff700" animating={show} style={{ marginTop: -15, paddingBottom: 10, }}>
+          </ActivityIndicator>
             <TouchableOpacity style={styles.btn} onPress={() => update()}>
               <Text>Update </Text>
             </TouchableOpacity>
@@ -270,9 +271,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     marginHorizontal: 89,
-    //marginLeft: 90,
-    //marginRight: 90,
-    marginBottom: 30,
+    marginBottom: 0,
     marginTop: 20
   },
 
@@ -321,7 +320,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   ImgBot: {
-    width: "37%",
+    width: "40%",
     marginTop: 30,
   },
 })
